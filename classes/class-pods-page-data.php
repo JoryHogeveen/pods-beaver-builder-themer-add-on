@@ -88,8 +88,8 @@ final class PodsPageData {
 
 		if ( ! isset( $content->url ) && isset( $settings->default_img_src ) ) {
 			$content = array(
-				'id'  => $settings['default_img'],
-				'url' => $settings['default_img_src'],
+				'id'  => $settings->default_img,
+				'url' => $settings->default_img_src,
 			);
 		}
 
@@ -131,6 +131,11 @@ final class PodsPageData {
 
 		$location = explode( ':', FLThemeBuilderRulesLocation::get_preview_location( $post->ID ) );
 		$pod_name = $location[1];
+
+		$pod  = pods( $pod_name );
+		$test = $pod->fields( 'book_author', 'type' );
+
+
 
 		$all_fields = self::recurse_pod_fields( $pod_name, $field_options );
 
@@ -212,6 +217,29 @@ final class PodsPageData {
 	}
 
 	/**
+	 *
+	 *  Get Settings Pods
+	 *
+	 * @since 1.0
+	 * @return array
+	 */
+	static public function pods_get_settings_fields() {
+
+		$settings_pods = (array) pods_api()->load_pods( array( 'type' => 'settings', 'names' => true ) );
+		$fields        = array();
+		/*		$fields = array(
+					'' => '- ' . __( 'Select Template', 'fl-theme-builder' ) . ' -'
+				);*/
+
+		foreach ( $settings_pods as $pod_name ) {
+			$fields = array_merge( $fields, self::recurse_pod_fields( $pod_name )) ;
+		}
+
+
+		return $fields;
+	}
+
+	/**
 	 * @param string $pod_name
 	 * @param array $field_options (based on pod_data array
 	 * @param string $prefix
@@ -236,6 +264,8 @@ final class PodsPageData {
 
 
 		foreach ( $all_pod_fields as $field_name => $field ) {
+
+			// @todo maybe improve with check for PodsForm::tableless_field_types()
 			if ( isset( $field['type'] ) && 'taxonomy' === $field['type'] ) {
 				$linked_pod = $field_name;
 				if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_visited[ $linked_pod ] ) ) {
@@ -253,7 +283,7 @@ final class PodsPageData {
 
 			}
 
-			if ( $field_options ) {
+			if ( $field_options ) { // @todo $options = array_merge( $field, $field['options'] );  Self Merge Array and itterat over all options ? => simpler code removes one foreach
 				if ( isset($field_options['type']) && $field_options['type'] === $field['type'] ) {
 					if ( isset ( $field_options['options'] ) ) {
 						foreach ( $field_options['options'] as $_option => $option_value ) {
