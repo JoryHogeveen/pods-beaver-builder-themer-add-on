@@ -132,11 +132,6 @@ final class PodsPageData {
 		$location = explode( ':', FLThemeBuilderRulesLocation::get_preview_location( $post->ID ) );
 		$pod_name = $location[1];
 
-		$pod  = pods( $pod_name );
-		$test = $pod->fields( 'book_author', 'type' );
-
-
-
 		$all_fields = self::recurse_pod_fields( $pod_name, $field_options );
 
 		return $all_fields;
