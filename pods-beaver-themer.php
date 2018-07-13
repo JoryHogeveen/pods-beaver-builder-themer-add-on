@@ -474,4 +474,3 @@ function pods_beaver_update_module_settings_data_source( $data, $status, $post_i
 
 	return $data;
 }
-

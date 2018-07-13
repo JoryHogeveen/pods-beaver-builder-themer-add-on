@@ -356,6 +356,26 @@ final class PodsBeaverPageData {
 		return $content;
 
 	}
+	/**
+	 * Returns Pods Template Output
+	 *
+	 * @param $settings
+	 * @param $property
+	 *
+	 * @return string
+	 *
+	 * @since 1.0
+	 */
+	public static function get_form( $settings, $property ) {
+
+		$content[] = (object) array( 'label' => 'Title', 'content' => 'TestContent');
+		$content[] = (object) array( 'label' => 'Title', 'content' => 'TestContent');
+		$content[] = (object) array( 'label' => 'Title', 'content' => 'TestContent');
+		$content[] = (object) array( 'label' => 'Title', 'content' => 'TestContent');
+
+		return $content;
+
+	}
 
 	/**
 	 * @todo     : $option['file_type'] if a user chooses 'custom' check further if only image file type???

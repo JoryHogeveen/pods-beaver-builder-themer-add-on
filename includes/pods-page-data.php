@@ -413,3 +413,29 @@ $form = array(
 
 FLPageData::add_site_property( 'pods_settings_color', $data );
 FLPageData::add_site_property_settings_fields( 'pods_settings_color', $form );
+
+
+
+/**
+ * Form Experiment
+ */
+$data = array(
+	'label'  => __( 'Form Experiment', 'pods-beaver-builder-themer-add-on' ),
+	'group'  => 'pods',
+	'type'   => 'all',
+
+	'getter' => 'PodsBeaverPageData::get_form',
+);
+
+$form = array(
+	'field'       => array(
+		'type'        => 'post-type',
+		'label'       => __( 'Post Type', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'Only works for image fields', 'pods-beaver-builder-themer-add-on' ),
+		'help'        => __( 'Enter field name, traversal is supported.', 'pods-beaver-builder-themer-add-on' ),
+		'placeholder' => __( 'Example: category.image_field', 'pods-beaver-builder-themer-add-on' ),
+	),
+);
+
+FLPageData::add_post_property( 'form_experiment', $data );
+FLPageData::add_post_property_settings_fields( 'form_experiment', $form );
